@@ -1,25 +1,28 @@
-import { useState } from "react";
+import {useState} from "react";
+
+function Viewer({}) {
+    console.log("viewer component update!");
+    return <div>Viewer</div>
+}
 
 function Body() {
-    const [state, setState] = useState({
-        name: "",
-        gender: "",
-        birth: "",
-        bio: "",
-    });
-
-    const handleOnChange = (e) => {
-        console.log("현재 수정 대상:", e.target.name)
+    const [number, setNumber] = useState(0);
+    const onIncrease = () => {
+        setNumber(number + 1);
     };
-
+    const onDecrease = () => {
+        setNumber(number - 1)
+    };
     return (
-        <div>
-            <h2>
-                <input type="text" onChange={handleOnChange}/>
-                <br/>
-                {box}
-            </h2>
-        </div>
+       <div>
+           <h2>{number}</h2>
+           <Viewer />
+
+           <div>
+               <button onClick={onDecrease}>-</button>
+               <button onClick={onIncrease}>+</button>
+           </div>
+       </div>
     );
 }
 
