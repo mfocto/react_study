@@ -5,10 +5,11 @@ import Footer from "./component/Footer"
 
 
 function App() {
+  const name = "123";
   return (
     <div className="App">
       <Header />
-      <Body />
+      <Body name={name}/>
       <Footer />
     </div>
   );
