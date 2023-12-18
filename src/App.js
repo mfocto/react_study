@@ -1,27 +1,48 @@
 import './App.css';
-import {useEffect,useState} from "react";
-import Viewer from './component/Viewer'
-import Controller from './component/Controller'
+import {useRef, useState} from "react";
+import Header from './component/Header'
+import TodoEditor from "./component/TodoEditor";
+import TodoList from "./component/TodoList";
+
+const mockTodo = [{
+        id: 0,
+        isDone: false,
+        content: "공부",
+        createdDate: new Date().getTime(),
+},
+    {
+        id: 1,
+        isDone: false,
+        content: "빨래",
+        createdDate: new Date().getTime(),
+},
+    {
+        id: 2,
+        isDone: false,
+        content: "노래",
+        createdDate: new Date().getTime(),
+}];
 
 function App() {
-    const [count, setCount] = useState(0);
-    const handleSetCount = (value) => {
-        setCount(count + value);
-    }
-    useEffect(() => {
-        console.log("count update:", count);
-    }, [count]);
-    return (
-        <div className="App">
-            <h1>Simple Counter</h1>
-            <section>
-                <Viewer count={count}/>
-            </section>
-            <section>
-                <Controller handleSetCount={handleSetCount}/>
-            </section>
-        </div>
-    );
+    const [todo, setTodo] = useState(mockTodo);
+    const idRef = useRef(3);
+    const onCreate = (content) => {
+      const newItem = {
+          id : idRef.current,
+          content,
+          isDone: false,
+          createdDate: new Date().getTime()
+      };
+      setTodo([newItem, ...todo]);
+      idRef.current += 1;
+    };
+  return (
+    <div className="App">
+        <Header />
+        <TodoEditor onCreate={onCreate}/>
+        <TodoList />
+    </div>
+  );
 }
 
 export default App;
