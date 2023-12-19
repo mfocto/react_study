@@ -36,11 +36,36 @@ function App() {
       setTodo([newItem, ...todo]);
       idRef.current += 1;
     };
+
+    const onUpdate = (targetId) => {
+        // setTodo(
+        //     // eslint-disable-next-line array-callback-return
+        //     todo.map((it) => {
+        //         if (it.id === targetId) {
+        //             return {
+        //                 ...it,
+        //                 isDone: !it.isDone,
+        //             }
+        //         }
+        //     })
+        // )
+
+        //삼항연산자로 변환
+        setTodo(
+            todo.map((it) => it.id === targetId ? {...it, isDone: !it.isDone}: it)
+        )
+    }
+
+    const onDelete = (targetId) => {
+        setTodo(todo.filter((it) => it.id !== targetId))
+    }
+
+
   return (
     <div className="App">
         <Header />
         <TodoEditor onCreate={onCreate}/>
-        <TodoList />
+        <TodoList todo={todo} onUpdate={onUpdate} onDelete={onDelete}/>
     </div>
   );
 }
