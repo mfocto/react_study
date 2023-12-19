@@ -1,0 +1,11 @@
+.TestComp .btn_c button {
+    height: 100%;
+    margin: 10px;
+}
+
+.TestComp .count_b{
+    margin-left: 50px;
+    color: red;
+    font-size: 40px;
+    font-weight: bolder;
+}
