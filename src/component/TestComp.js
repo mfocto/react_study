@@ -21,7 +21,7 @@ const TestComp = () => {
         <div className="TestComp">
             <h4>test Component</h4>
             <div className="count_b">
-                <bold>{count}</bold>
+                <h3>{count}</h3>
             </div>
             <div className="btn_c">
                 <button onClick={() => dispatch({type:"INCREASE", data: 1})}>+</button>
