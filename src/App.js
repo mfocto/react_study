@@ -1,5 +1,5 @@
 import './App.css';
-import {useRef, useState} from "react";
+import {useRef, useReducer} from "react";
 import Header from './component/Header'
 import TodoEditor from "./component/TodoEditor";
 import TodoList from "./component/TodoList";
@@ -24,9 +24,37 @@ const mockTodo = [{
         createdDate: new Date().getTime(),
 }];
 
+function reducer(state, action) {
+    switch(action.type){
+        case "CREATE" : {
+            return [action.newItem, ...state];
+        }
+        case "UPDATE" : {
+            return state.map((it) => it.id === action.targetId
+                ?{
+                    // 전달한 객체 아이디와 같은 아이디 값인 경우
+                    ...it,
+                    isDone: !it.isDone,
+                }
+                :
+                    // 전달한 객체 아이디와 같은 아이디 값이 아닌 경우
+                    it
+                )
+        }
+        case "DELETE": {
+            return state.filter((it) => it.id !== action.targetId);
+        }
+        default:
+            return state;
+    }
+
+}
+
 function App() {
-    const [todo, setTodo] = useState(mockTodo);
+    const [todo, dispatch] = useReducer(reducer, mockTodo);
     const idRef = useRef(3);
+    /*
+    * useState 버전 *
     const onCreate = (content) => {
       const newItem = {
           id : idRef.current,
@@ -37,8 +65,26 @@ function App() {
       setTodo([newItem, ...todo]);
       idRef.current += 1;
     };
+     */
+
+    const onCreate = (content) => {
+        dispatch({
+            type: "CREATE",
+            newItem: {
+                id: idRef.current,
+                content,
+                isDone: false,
+                createdDate: new Date().getTime(),
+            },
+        });
+        idRef.current += 1;
+    };
 
     const onUpdate = (targetId) => {
+        /*
+        *   useState
+        */
+
         // setTodo(
         //     // eslint-disable-next-line array-callback-return
         //     todo.map((it) => {
@@ -52,13 +98,29 @@ function App() {
         // )
 
         //삼항연산자로 변환
-        setTodo(
-            todo.map((it) => it.id === targetId ? {...it, isDone: !it.isDone}: it)
-        )
+        // setTodo(
+        //     todo.map((it) => it.id === targetId ? {...it, isDone: !it.isDone}: it)
+        // )
+
+        /*
+        * useReducer
+        */
+        dispatch({
+            type:"UPDATE",
+            targetId,
+        });
     }
 
     const onDelete = (targetId) => {
-        setTodo(todo.filter((it) => it.id !== targetId))
+        // setTodo(todo.filter((it) => it.id !== targetId))
+
+        /*
+        *   useReducer
+        */
+        dispatch({
+            type: "DELETE",
+            targetId,
+        });
     }
 
 
