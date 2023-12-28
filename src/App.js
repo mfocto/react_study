@@ -1,5 +1,5 @@
 import './App.css';
-import {useRef, useReducer} from "react";
+import {useCallback, useRef, useReducer} from "react";
 import Header from './component/Header'
 import TodoEditor from "./component/TodoEditor";
 import TodoList from "./component/TodoList";
@@ -80,7 +80,7 @@ function App() {
         idRef.current += 1;
     };
 
-    const onUpdate = (targetId) => {
+    const onUpdate = useCallback((targetId) => {
         /*
         *   useState
         */
@@ -109,9 +109,9 @@ function App() {
             type:"UPDATE",
             targetId,
         });
-    }
+    }, []);
 
-    const onDelete = (targetId) => {
+    const onDelete = useCallback((targetId) => {
         // setTodo(todo.filter((it) => it.id !== targetId))
 
         /*
@@ -121,7 +121,7 @@ function App() {
             type: "DELETE",
             targetId,
         });
-    }
+    }, []);
 
 
   return (
