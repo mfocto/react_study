@@ -21,5 +21,15 @@ border-radius: 50px;}
 }
 
 .DiaryItem .info_section .date_wrapper {
-    font-weight: bold
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.DiaryItem .info_section .content_wrapper {
+    font-size: 18px;
+}
+
+.DiaryItem .button_section {
+    min-width: 70px;
 }
